@@ -55,7 +55,6 @@ pub struct NbglHomeAndSettings {
     generic_contents: nbgl_genericContents_t,
     info_list: nbgl_contentInfoList_t,
     icon: nbgl_icon_details_t,
-    start_page: PageIndex,
 }
 
 impl SyncNBGL for NbglHomeAndSettings {}
@@ -82,7 +81,6 @@ impl<'a> NbglHomeAndSettings {
             generic_contents: nbgl_genericContents_t::default(),
             info_list: nbgl_contentInfoList_t::default(),
             icon: nbgl_icon_details_t::default(),
-            start_page: PageIndex::Home,
         }
     }
 
@@ -134,18 +132,11 @@ impl<'a> NbglHomeAndSettings {
         }
     }
 
-    pub fn set_page(self, page: PageIndex) -> NbglHomeAndSettings {
-        NbglHomeAndSettings {
-            start_page: page,
-            ..self
-        }
-    }
-
     /// Show the home screen and settings page.
     /// This function will block until an APDU is received or the user quits the app.
     /// DEPRECATED as it constraints to refresh screen for every received APDU.
     /// Use `show_and_return` instead.
-    pub fn show<T: TryFrom<ApduHeader>>(&mut self) -> Event<T>
+    pub fn show<T: TryFrom<ApduHeader>>(&mut self, page_index: u8) -> Event<T>
     where
         Reply: From<<T as TryFrom<ApduHeader>>::Error>,
     {
@@ -200,10 +191,7 @@ impl<'a> NbglHomeAndSettings {
                     self.app_name.as_ptr() as *const c_char,
                     &self.icon as *const nbgl_icon_details_t,
                     core::ptr::null(),
-                    match self.start_page {
-                        PageIndex::Home => INIT_HOME_PAGE as u8,
-                        PageIndex::Settings(idx) => idx,
-                    },
+                    page_index,
                     &self.generic_contents as *const nbgl_genericContents_t,
                     &self.info_list as *const nbgl_contentInfoList_t,
                     core::ptr::null(),
@@ -280,10 +268,7 @@ impl<'a> NbglHomeAndSettings {
                 self.app_name.as_ptr() as *const c_char,
                 &self.icon as *const nbgl_icon_details_t,
                 core::ptr::null(),
-                match self.start_page {
-                    PageIndex::Home => INIT_HOME_PAGE as u8,
-                    PageIndex::Settings(idx) => idx,
-                },
+                page_index,
                 &self.generic_contents as *const nbgl_genericContents_t,
                 &self.info_list as *const nbgl_contentInfoList_t,
                 core::ptr::null(),
