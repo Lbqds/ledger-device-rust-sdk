@@ -218,7 +218,7 @@ impl<'a> NbglHomeAndSettings {
 
     /// Show the home screen and settings page.
     /// This function returns immediately after the screen is displayed.
-    pub fn show_and_return(&mut self) {
+    pub fn show_and_return(&mut self, page_index: u8) {
         unsafe {
             self.info_contents_ptr = self
                 .info_contents
