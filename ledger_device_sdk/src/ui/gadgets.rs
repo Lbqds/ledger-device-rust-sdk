@@ -933,6 +933,9 @@ impl<'a> MultiFieldReview<'a> {
                     crate::ui::screen_util::screen_update();
                     loop {
                         match get_event(&mut buttons) {
+                            Some(ButtonEvent::LeftButtonPress) => {
+                                LEFT_S_ARROW.instant_display();
+                            }
                             Some(ButtonEvent::LeftButtonRelease) => {
                                 cur_page = cur_page.saturating_sub(1);
                                 break;
@@ -951,6 +954,12 @@ impl<'a> MultiFieldReview<'a> {
                     crate::ui::screen_util::screen_update();
                     loop {
                         match get_event(&mut buttons) {
+                            Some(ButtonEvent::LeftButtonPress) => {
+                                LEFT_S_ARROW.instant_display();
+                            }
+                            Some(ButtonEvent::RightButtonPress) => {
+                                RIGHT_S_ARROW.instant_display();
+                            }
                             Some(ButtonEvent::LeftButtonRelease) => {
                                 cur_page = cur_page.saturating_sub(1);
                                 if cur_page == 0 && self.fields.is_empty() {
@@ -1002,8 +1011,14 @@ fn display_first_page(page_opt: &Option<Page>) {
 
             let mut buttons = ButtonsState::new();
             loop {
-                if let Some(ButtonEvent::RightButtonRelease) = get_event(&mut buttons) {
-                    return;
+                match get_event(&mut buttons) {
+                    Some(ButtonEvent::RightButtonPress) => {
+                        RIGHT_S_ARROW.instant_display();
+                    }
+                    Some(ButtonEvent::RightButtonRelease) => {
+                        return;
+                    }
+                    _ => (),
                 }
             }
         }
