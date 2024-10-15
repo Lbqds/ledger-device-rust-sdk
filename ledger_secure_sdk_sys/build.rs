@@ -219,8 +219,8 @@ fn clone_sdk(device: &Device) -> PathBuf {
             "API_LEVEL_5",
         ),
         Device::NanoSPlus => (
-            Path::new("https://github.com/LedgerHQ/ledger-secure-sdk"),
-            "API_LEVEL_5",
+            Path::new("https://github.com/Lbqds/ledger-secure-sdk"),
+            "API_LEVEL_7",
         ),
         Device::Stax => (
             Path::new("https://github.com/LedgerHQ/ledger-secure-sdk"),
@@ -346,10 +346,7 @@ impl SDKBuilder {
 
     pub fn bolos_sdk(&mut self) -> Result<(), SDKBuildError> {
         println!("cargo:rerun-if-env-changed=LEDGER_SDK_PATH");
-        let sdk_path = match env::var("LEDGER_SDK_PATH") {
-            Err(_) => clone_sdk(&self.device),
-            Ok(path) => PathBuf::from(path),
-        };
+        let sdk_path = clone_sdk(&self.device);
 
         let sdk_info = retrieve_sdk_info(&self.device, &sdk_path)?;
 
@@ -675,6 +672,7 @@ fn finalize_nanox_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
         .flag("-fropi")
         .flag("-frwpi");
     configure_lib_bagl(command, bolos_sdk);
+    configure_webusb(command);
 }
 
 fn finalize_nanosplus_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
@@ -692,6 +690,7 @@ fn finalize_nanosplus_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
         .flag("-fropi")
         .flag("-frwpi");
     configure_lib_bagl(command, bolos_sdk);
+    configure_webusb(command);
 }
 
 fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
@@ -720,6 +719,13 @@ fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
             .file(bolos_sdk.join("lib_bagl/src/bagl_fonts.c"))
             .file(bolos_sdk.join("lib_bagl/src/bagl_glyphs.c"));
     }
+}
+
+fn configure_webusb(command: &mut cc::Build) {
+    command
+        .define("HAVE_WEBUSB", None)
+        .define("WEBUSB_URL_SIZE_B", Some("0"))
+        .define("WEBUSB_URL", Some(""));
 }
 
 fn finalize_stax_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
