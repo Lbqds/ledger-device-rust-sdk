@@ -729,6 +729,7 @@ fn configure_webusb(command: &mut cc::Build, bolos_sdk: &Path) {
         .define("HAVE_WEBUSB", None)
         .define("WEBUSB_URL_SIZE_B", Some("0"))
         .define("WEBUSB_URL", Some(""))
+        .include(bolos_sdk.join("lib_bagl/include/"))
         .include(bolos_sdk.join("lib_ux/include/"))
         .file(bolos_sdk.join("src/os_io_seproxyhal.c"));
 }
