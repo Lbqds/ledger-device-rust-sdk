@@ -718,6 +718,7 @@ fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
         .define("HAVE_BAGL_FONT_SYMBOLS_0", None)
         .define("HAVE_BAGL_FONT_SYMBOLS_1", None)
         .include(bolos_sdk.join("lib_bagl/include/"))
+        .include(bolos_sdk.join("lib_bagl/src/"))
         .file(bolos_sdk.join("lib_bagl/src/bagl.c"))
         .file(bolos_sdk.join("lib_bagl/src/bagl_fonts.c"))
         .file(bolos_sdk.join("lib_bagl/src/bagl_glyphs.c"));
