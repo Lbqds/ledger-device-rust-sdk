@@ -22,7 +22,8 @@ const SDK_C_FILES: [&str; 8] = [
     "src/syscalls.c",
 ];
 
-const SDK_USB_FILES: [&str; 6] = [
+const SDK_USB_FILES: [&str; 7] = [
+    "os_io_seproxyhal.c",
     "lib_stusb/usbd_conf.c",
     "lib_stusb/STM32_USB_Device_Library/Core/Src/usbd_core.c",
     "lib_stusb/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c",
