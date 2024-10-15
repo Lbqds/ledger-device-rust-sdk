@@ -724,11 +724,12 @@ fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
     }
 }
 
-fn configure_webusb(command: &mut cc::Build) {
+fn configure_webusb(command: &mut cc::Build, bolos_sdk: &Path) {
     command
         .define("HAVE_WEBUSB", None)
         .define("WEBUSB_URL_SIZE_B", Some("0"))
-        .define("WEBUSB_URL", Some(""));
+        .define("WEBUSB_URL", Some(""))
+        .file(bolos_sdk.join("src/os_io_seproxyhal.c"));
 }
 
 fn finalize_stax_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
