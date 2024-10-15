@@ -717,10 +717,11 @@ fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
             .define("HAVE_BAGL_FONT_OPEN_SANS_SEMIBOLD_13_18PX", None)
             .define("HAVE_BAGL_FONT_SYMBOLS_0", None)
             .define("HAVE_BAGL_FONT_SYMBOLS_1", None)
-            .include(bolos_sdk.join("lib_bagl/src/"))
+            .include(bolos_sdk.join("lib_bagl/include/"))
             .file(bolos_sdk.join("lib_bagl/src/bagl.c"))
             .file(bolos_sdk.join("lib_bagl/src/bagl_fonts.c"))
-            .file(bolos_sdk.join("lib_bagl/src/bagl_glyphs.c"));
+            .file(bolos_sdk.join("lib_bagl/src/bagl_glyphs.c"))
+            .include(bolos_sdk.join("lib_ux/include/"));
     }
 }
 
