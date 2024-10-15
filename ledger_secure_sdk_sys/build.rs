@@ -675,7 +675,7 @@ fn finalize_nanox_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
         .flag("-fropi")
         .flag("-frwpi");
     configure_lib_bagl(command, bolos_sdk);
-    configure_webusb(command);
+    configure_webusb(command, bolos_sdk);
 }
 
 fn finalize_nanosplus_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
@@ -693,7 +693,7 @@ fn finalize_nanosplus_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
         .flag("-fropi")
         .flag("-frwpi");
     configure_lib_bagl(command, bolos_sdk);
-    configure_webusb(command);
+    configure_webusb(command, bolos_sdk);
 }
 
 fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
