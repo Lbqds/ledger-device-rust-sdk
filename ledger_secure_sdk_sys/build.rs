@@ -210,15 +210,22 @@ fn retrieve_target_file_infos(
 
 /// Fetch the appropriate C SDK to build
 fn clone_sdk(device: &Device) -> PathBuf {
+    println!(">>>>>>>>>>>> device is {:?}", device);
     let (repo_url, sdk_branch) = match device {
-        Device::NanoS => (
-            Path::new("https://github.com/LedgerHQ/ledger-secure-sdk"),
-            "API_LEVEL_LNS",
-        ),
-        Device::NanoX => (
-            Path::new("https://github.com/LedgerHQ/ledger-secure-sdk"),
-            "API_LEVEL_5",
-        ),
+        Device::NanoS => {
+            println!(">>>>>>>>>>>>>> nanos");
+            (
+                Path::new("https://github.com/Lbqds/ledger-secure-sdk"),
+                "API_LEVEL_6",
+            )
+        },
+        Device::NanoX => {
+            println!(">>>>>>>>>>>>>> nanox");
+            (
+                Path::new("https://github.com/Lbqds/ledger-secure-sdk"),
+                "API_LEVEL_6",
+            )
+        },
         Device::NanoSPlus => {
             println!(">>>>>>>>>>>>>> nanosplus");
             (
