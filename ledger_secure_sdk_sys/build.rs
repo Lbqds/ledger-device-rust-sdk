@@ -416,10 +416,10 @@ impl SDKBuilder {
             command.file(cxng_src);
         }
 
-        command
-            .files(&AUX_C_FILES)
-            .files(str2path(&self.bolos_sdk, &SDK_C_FILES))
-            .files(str2path(&self.bolos_sdk, &SDK_USB_FILES));
+        // command
+        //     .files(&AUX_C_FILES)
+        //     .files(str2path(&self.bolos_sdk, &SDK_C_FILES))
+        //     .files(str2path(&self.bolos_sdk, &SDK_USB_FILES));
 
         command = command
             .include(self.gcc_toolchain.join("include"))
@@ -435,6 +435,9 @@ impl SDKBuilder {
                 self.bolos_sdk
                     .join("lib_stusb/STM32_USB_Device_Library/Class/HID/Inc"),
             )
+            .files(&AUX_C_FILES)
+            .files(str2path(&self.bolos_sdk, &SDK_C_FILES))
+            .files(str2path(&self.bolos_sdk, &SDK_USB_FILES))
             .debug(true)
             .flag("-Oz")
             .flag("-fomit-frame-pointer")
@@ -502,7 +505,6 @@ impl SDKBuilder {
                 "include/syscalls.h",
                 "include/os_io_seproxyhal.h",
                 "include/os_ux.h",
-                "include/ux.h",
                 "include/ox.h", /* crypto-related syscalls */
                 "lib_stusb/STM32_USB_Device_Library/Core/Inc/usbd_def.h",
                 "include/os_io_usb.h",
