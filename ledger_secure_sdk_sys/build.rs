@@ -698,6 +698,7 @@ fn finalize_nanosplus_configuration(command: &mut cc::Build, bolos_sdk: &Path) {
 
 fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
     if env::var_os("CARGO_FEATURE_LIB_BAGL").is_some() {
+        println!(">>>>>>>>>>>>>>>>>>> cargo feature lib bagl");
         command
             .define("HAVE_BAGL", None)
             // Just include all the fonts for now; we can shrink the X and S+ images later.
@@ -717,7 +718,7 @@ fn configure_lib_bagl(command: &mut cc::Build, bolos_sdk: &Path) {
             .define("HAVE_BAGL_FONT_OPEN_SANS_SEMIBOLD_13_18PX", None)
             .define("HAVE_BAGL_FONT_SYMBOLS_0", None)
             .define("HAVE_BAGL_FONT_SYMBOLS_1", None)
-            .include(bolos_sdk.join("lib_bagl/src/"))
+            .include(bolos_sdk.join("lib_bagl/include/"))
             .file(bolos_sdk.join("lib_bagl/src/bagl.c"))
             .file(bolos_sdk.join("lib_bagl/src/bagl_fonts.c"))
             .file(bolos_sdk.join("lib_bagl/src/bagl_glyphs.c"));
