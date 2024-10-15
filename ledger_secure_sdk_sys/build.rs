@@ -445,6 +445,9 @@ impl SDKBuilder {
             .flag("-fshort-enums")
             .flag("-mno-unaligned-access")
             .flag("-Wno-unused-command-line-argument")
+            .define("HAVE_WEBUSB", None)
+            .define("WEBUSB_URL_SIZE_B", Some("0"))
+            .define("WEBUSB_URL", Some(""))
             .clone();
 
         // #[cfg(feature = "ccid")]
